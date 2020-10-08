@@ -1,13 +1,15 @@
 export class User {
     constructor(
-        public email: string,
+        public username: string,
         public id: string,
-        private _token: string,
-        private _tokenExpirationDate: Date
+        private tokenExpires: number,
+        private _token: string
     ) { }
 
     get token() {
-        if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+      console.log('Date');
+      console.log(this.tokenExpires);
+        if (!this.tokenExpires || new Date().getTime() > this.tokenExpires*1000) {
             return null;
         }
         return this._token;

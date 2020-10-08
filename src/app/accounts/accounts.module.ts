@@ -6,6 +6,6 @@ import { AccountsComponent } from './accounts.component';
 
 @NgModule({
   declarations: [AccountsComponent],
-  imports: [SharedModule, AccountsRouterModule]
+  imports: [SharedModule, AccountsRouterModule],
 })
-export class AccountsModule { }
+export class AccountsModule {}

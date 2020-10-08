@@ -7,9 +7,7 @@ export class User {
     ) { }
 
     get token() {
-      console.log('Date');
-      console.log(this.tokenExpires);
-        if (!this.tokenExpires || new Date().getTime() > this.tokenExpires*1000) {
+        if (!this.tokenExpires || new Date().getTime() > this.tokenExpires) {
             return null;
         }
         return this._token;

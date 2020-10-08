@@ -32,7 +32,7 @@ export class AuthService {
           this.handleAuthentication(
             tokenDecoded.username,
             tokenDecoded.user_id,
-            tokenDecoded.exp,
+            tokenDecoded.exp*1000,
             resData.token
           );
         })
@@ -46,10 +46,6 @@ export class AuthService {
       username: string;
       _token: string;
     } = JSON.parse(localStorage.getItem('userData'));
-    console.log('toto');
-    console.log(userData);
-    console.log(new Date().getTime());
-    console.log(userData.tokenExpires);
     if (!userData) {
       return;
     }
@@ -72,7 +68,7 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
-    // localStorage.removeItem('userData');
+    localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -91,10 +87,10 @@ export class AuthService {
     expiresIn: number,
     token: string
   ) {
-    const expirationDate = expiresIn * 1000;
+    const expirationDate = expiresIn;
     const user = new User(username, userId, expirationDate, token);
     this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
+    this.autoLogout(expiresIn);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
@@ -104,10 +100,7 @@ export class AuthService {
       return throwError(errorMessage);
     }
     switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists already';
-        break;
-      case 'EMAIL_NOT_FOUND':
+      case 'USERNAME_NOT_FOUND':
         errorMessage = 'This email does not exist.';
         break;
       case 'INVALID_PASSWORD':

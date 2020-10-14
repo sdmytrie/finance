@@ -18,7 +18,8 @@ export class AccountsComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.fetch().subscribe(
       (accounts: Account[]) => {
-        this.accounts = accounts
+        console.log(accounts);
+        this.accounts = accounts;
     });
   }
 

@@ -1,6 +1,11 @@
 <p>accounts works!</p>
 <div class="row">
   <div class="col-md-7">
-    Yop
+    <ul>
+      <li *ngFor="let account of accounts">
+        {{ account.name }}
+      </li>
+    </ul>
+
   </div>
 </div>

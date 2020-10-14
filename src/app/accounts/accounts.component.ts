@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { Account } from './account.model';
+import { AccountsService } from './accounts.service';
 
 @Component({
   selector: 'app-accounts',
@@ -6,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit {
-
-  constructor() { }
+  accounts: Account[];
+  constructor(
+    private accountService: AccountsService
+  ) { }
 
   ngOnInit(): void {
+    this.accountService.fetch().subscribe(
+      (accounts: Account[]) => {
+        this.accounts = accounts
+    });
   }
 
 }

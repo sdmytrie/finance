@@ -51,12 +51,10 @@ export class AuthComponent implements OnDestroy {
 
         authObs.subscribe(
             resData => {
-                console.log(resData);
                 this.isLoading = false;
-                this.router.navigate(['/recipes']);
+                this.router.navigate(['/accounts']);
             },
             errorMessage => {
-                console.log(errorMessage);
                 this.error = errorMessage;
                 this.showErrorAlert(errorMessage);
                 this.isLoading = false;

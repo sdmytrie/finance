@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a routerLink="/" class="navbar-brand">
-        <mat-icon>home</mat-icon>
+        <i class="material-icons">home</i>
       </a>
     </div>
 
@@ -13,6 +13,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="isAuthenticated">
+          <p class="nav-link">{{ username }}</p>
+        </li>
         <li class="nav-item" *ngIf="isAuthenticated">
           <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Logout</a>
         </li>

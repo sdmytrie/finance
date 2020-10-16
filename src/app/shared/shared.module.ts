@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 
 import { AlertComponent } from './alert/alert.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
@@ -14,7 +13,7 @@ import { DropdownDirective } from './dropdown.directive';
     PlaceholderDirective,
     DropdownDirective,
   ],
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule],
   exports: [
     AlertComponent,
     LoadingSpinnerComponent,

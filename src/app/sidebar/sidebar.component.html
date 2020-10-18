@@ -1,3 +1,10 @@
 <div class="row">
-  <div style="background-color: red;" class="col-md-12">Yop</div>
+  <div class="col-md-12">
+    <div class="account rounded mb-1" *ngFor="let account of accounts">
+      <h5 class="bg-dark m-1 rounded">
+        <a href="#" class="p-1 text-light">{{ account.name }}</a>
+      </h5>
+      <p class="account__balance">{{ account.balance }} €</p>
+    </div>
+  </div>
 </div>

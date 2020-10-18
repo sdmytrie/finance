@@ -13,12 +13,7 @@ export class AccountsService {
 
     constructor(private http: HttpClient, private router: Router) { }
 
-    setAccounts(accounts: Account[]) {
-        this.accounts = accounts;
-        this.accountsChanged.next(this.accounts.slice());
-    }
-
-    fetch() {
+    fetchAll() {
       return this.http.get<Account[]>(environment.apiUrl + '/accounts/');
     }
 }

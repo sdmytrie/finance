@@ -1,11 +1,52 @@
-<p>accounts works!</p>
-<div class="row">
-  <div class="col-md-7">
-    <ul>
-      <li *ngFor="let account of accounts">
-        {{ account.name }} -- {{ account.balance }}
-      </li>
-    </ul>
+<div class="row" id="content_header">
+  <div class="col-md-10">
+    <h2>
+      <span class="text-dark">Les comptes bancaires</span>
+    </h2>
+  </div>
+  <div class="col-md-2 text-right">
+    <button class="btn btn-info" id="account_add">Ajouter</button>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-hover table-striped table-bordered table-condensed table-sm table-light">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nom</th>
+          <th>IBAN / BIC</th>
+          <th>Solde</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of accounts">
+          <td>
+            {{ account.name }}
+          </td>
+          <td>
+            {{ account.iban}}
+            <br>
+            {{ account.bic }}
+          </td>
+          <td class="text-right">
+            {{ account.balance }} €
+          </td>
+          <td class="text-right">
+            <a href="#" class="text-dark">
+              <i class="material-icons">
+                <small>edit</small>
+              </i>
+            </a>
+            <a href="#" class="text-dark">
+              <i class="material-icons">
+                <small>delete_forever</small>
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

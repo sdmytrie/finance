@@ -2,6 +2,8 @@ export class Account {
     constructor(
         public id: number,
         public name: string,
-        public balance: number
+        public balance: number,
+        public iban: string,
+        public bic: string
     ){}
 }

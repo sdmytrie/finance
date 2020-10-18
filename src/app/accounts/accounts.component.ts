@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { Account } from './account.model';
 import { AccountsService } from './accounts.service';
@@ -11,21 +11,23 @@ import { AccountsService } from './accounts.service';
 })
 export class AccountsComponent implements OnInit, OnDestroy {
   accounts: Account[];
-  accounstSubscription: Subscription;
+  accountsSubscription: Subscription;
+
   constructor(
     private accountService: AccountsService
   ) { }
 
   ngOnInit(): void {
-    this.accounstSubscription = this.accountService.fetch().subscribe(
+    // this.accountService.getAccounts();
+    this.accountsSubscription = this.accountService.fetchAll().subscribe(
       (accounts: Account[]) => {
-        console.log(accounts);
         this.accounts = accounts;
+        this.accountService.accountsChanged.next(this.accounts.slice());
     });
   }
 
   ngOnDestroy(): void {
-    this.accounstSubscription.unsubscribe();
+    this.accountsSubscription.unsubscribe();
   }
 
 }

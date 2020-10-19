@@ -12,22 +12,39 @@ import { AccountsService } from './accounts.service';
 export class AccountsComponent implements OnInit, OnDestroy {
   accounts: Account[];
   accountsSubscription: Subscription;
+  editSubscription: Subscription;
+  editing: {edit:boolean, account_id:number, index:number, property:string};
 
   constructor(
-    private accountService: AccountsService
-  ) { }
+    private accountsService: AccountsService
+  ) {
+    this.editing = {edit:false, account_id:0, index:0, property: ''};
+  }
 
   ngOnInit(): void {
     // this.accountService.getAccounts();
-    this.accountsSubscription = this.accountService.fetchAll().subscribe(
+    this.accountsSubscription = this.accountsService.fetchAll().subscribe(
       (accounts: Account[]) => {
         this.accounts = accounts;
-        this.accountService.accountsChanged.next(this.accounts.slice());
+        this.accountsService.accountsChanged.next(this.accounts.slice());
     });
+    this.editSubscription = this.accountsService.editing.subscribe(
+      (editing) => {
+        this.editing = editing;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.accountsSubscription.unsubscribe();
+    this.editSubscription.unsubscribe();
   }
 
+  editOne(index: number, account_id: number, property: string) {
+    this.accountsService.editOne(index, account_id, property);
+  }
+
+  cancel() {
+    this.accountsService.cancel();
+  }
 }

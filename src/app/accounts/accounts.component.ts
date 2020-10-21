@@ -47,4 +47,10 @@ export class AccountsComponent implements OnInit, OnDestroy {
   cancel() {
     this.accountsService.cancel();
   }
+
+  onSave(event, index: number) {
+    console.log(event);
+    console.log(event.target.value);
+    this.accountsService.save(event.target.value, this.accounts, index);
+  }
 }

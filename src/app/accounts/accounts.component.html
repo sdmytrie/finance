@@ -11,7 +11,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <p *ngIf="edit">edit mode</p>
+    <p *ngIf="editing.edit">edit mode</p>
     <table class="table table-hover table-striped table-bordered table-condensed table-sm table-light">
       <thead class="thead-dark">
         <tr>
@@ -25,7 +25,12 @@
         <tr *ngFor="let account of accounts; let i = index">
           <td (dblclick)="editOne(i, account.id, 'name')">
             <p *ngIf="editing.edit && editing.index == i && editing.property == 'name'" (keyup.esc)="cancel()" autofocus>
-              <input type="text" name="name" id="name" value="{{ account.name }}" class="form-control">
+              <input type="text"
+                     name="name"
+                     id="name"
+                     value="{{ account.name }}"
+                     class="form-control"
+                     (keyup.enter)="onSave($event, i)">
             </p>
             <p *ngIf="!editing.edit || editing.index != i">
               {{ account.name }}

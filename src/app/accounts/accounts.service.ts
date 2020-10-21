@@ -19,12 +19,16 @@ export class AccountsService {
     }
 
     editOne(index: number, account_id: number, property: string) {
-      console.log(index);
-      console.log(account_id);
       this.editing.next({edit: true, account_id: account_id, index: index, property:property});
     }
 
     cancel() {
+      this.editing.next({edit: false, account_id: 0, index: 0, property:''});
+    }
+
+    save(value: string, accounts: Account[], index: number) {
+      let account = accounts[index];
+      account.name = value;
       this.editing.next({edit: false, account_id: 0, index: 0, property:''});
     }
 }

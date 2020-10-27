@@ -6,14 +6,8 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
-  display: grid;
-  grid-template-columns: 25rem auto;
-  grid-template-rows: 25rem auto;
-  grid-template-areas:
-    "header header"
-    "sidebar main";
-  grid-gap: 2rem;
   font-family: sans-serif;
 }

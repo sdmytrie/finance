@@ -1,7 +1,55 @@
-.form-signin {
+.signin {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 1rem;
-  margin: auto;
+  width: 20rem;
+  border: solid 2px #023d6d;
+  border-radius: 10px;
+  margin: 0.8rem;
+  box-shadow: 12px 12px 2px 1px rgba(2, 61, 109, .2);
+}
+
+.signin input[type='text'],
+.signin input[type='password'] {
+  padding: 0.6rem;
+  margin: 0.8rem;
+  border-radius: 10px;
+  border-color: #023d6d;
+  font-size: 1.2rem;
+}
+
+.signin input[type='text']:focus,
+.signin input[type='password']:focus {
+  outline: none;
+}
+
+.signin label {
+  padding: 0.8rem;
+  margin: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.signin__submit {
+}
+
+.signin__submit button {
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  color: #023d6d;
+  background-color: white;
+  cursor: pointer;
+}
+
+.signin__submit button:hover,
+.signin__submit button:active {
+  color: white;
+  background-color: #023d6d;
+}
+
+.signin__submit button:disabled {
+  color: #023d6d;
+  background-color: lightgray;
 }

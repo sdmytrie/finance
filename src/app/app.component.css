@@ -1,4 +1,38 @@
+.container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 3rem fit-content(1rem) auto;
+  grid-template-areas:
+    'header'
+    'sidebar'
+    'main';
+}
+
+@media (min-width: 40rem) {
+  .container {
+    /* grid-template-columns: minmax(auto, 20rem) auto; */
+    grid-template-columns: fit-content(1rem) auto;
+    grid-template-rows: 3rem auto;
+    grid-template-areas:
+      'header header'
+      'sidebar main';
+    grid-column-gap: 0.8rem;
+  }
+}
+
 .header {
   grid-area: header;
-  background-color: red;
+  background-color: #023d6d;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #023d6d;
+}
+
+.main {
+  grid-area: main;
+  justify-self: center;
+  background-color: white;
 }

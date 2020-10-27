@@ -7,7 +7,7 @@ import { AccountsService } from './accounts.service';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.scss']
+  styleUrls: ['./accounts.component.css']
 })
 export class AccountsComponent implements OnInit, OnDestroy {
   accounts: Account[];

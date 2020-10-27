@@ -1,0 +1,47 @@
+.main__header {
+  display: flex;
+  margin: 0.8rem 0;
+  padding: 0 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(2, 61, 109, 0.1);
+}
+
+.main__header button {
+  height: 2rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  color: white;
+  background-color: #023d6d;
+  cursor: pointer;
+}
+
+.main__header button:hover,
+.main__header button:active {
+  color: #023d6d;
+  background-color: white;
+}
+
+.main__account-datatable {
+  width: 100%;
+  font-size: 1.2rem;
+  box-shadow: 8px 8px rgba(0, 0, 0, .2);
+}
+
+.main__account-datatable thead {
+  color: white;
+  background-color: #023d6d;
+}
+
+.main__account-datatable tr.k-alt:nth-child(odd) {
+  background: #ccc;
+}
+
+.main__account-datatable td {
+  padding: 0 0.8rem;
+}
+
+.main__account-datatable td.currency {
+  padding: 0 0.8rem;
+  text-align: right;
+}

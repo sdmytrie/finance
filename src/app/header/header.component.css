@@ -1,4 +1,62 @@
 .navbar {
-  grid-area: navbar;
-  background-color: red;
+  display: flex;
+  height: 3rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__brand {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar__brand i {
+  font-size: 1.8rem;
+  vertical-align: middle;
+}
+
+.toggle-button {
+  width: 3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.toggle-button__bar {
+  width: 100%;
+  height: 0.2rem;
+  background: white;
+  display: block;
+  margin: 0.6rem 0;
+}
+
+.navbar__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.navbar__item {
+  margin: 0 1rem;
+  color: white;
+}
+
+.navbar__item a,
+.mobile-nav__item a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.2rem 0;
+}
+
+.navbar__item a:hover,
+.navbar__item a:active {
+  color: white;
+  border-bottom: 5px solid white;
 }

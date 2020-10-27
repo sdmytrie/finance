@@ -1,0 +1,45 @@
+.account {
+  margin: 0.8rem;
+  padding: 0.8rem;
+  background-color: white;
+  border-radius: 10px;
+  border: solid 1px white;
+  box-shadow: 8px 8px rgba(0, 0, 0, .2);
+}
+
+@media (min-width: 40rem) {
+  .account {
+    width: 10rem;
+  }
+}
+
+.account__items {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 40rem) {
+  .account__item {
+    padding: 4px;
+  }
+}
+
+.account__item a {
+  text-decoration: none;
+  color: #023d6d;
+}
+
+.account__item a:hover,
+.account__item a:active {
+  text-decoration: underline;
+}
+
+.account__balance {
+  color: black;
+  text-align: right;
+  font-size: 0.8rem;
+}

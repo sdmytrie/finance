@@ -1,63 +1,59 @@
-<div class="row" id="content_header">
-  <div class="col-md-10">
-    <h2>
-      <span class="text-dark">Les comptes bancaires</span>
-    </h2>
-  </div>
-  <div class="col-md-2 text-right">
-    <button class="btn btn-info" id="account_add">Ajouter</button>
-  </div>
+<div class="main__header">
+  <h2>
+    Les comptes bancaires
+  </h2>
+  <button class="btn btn-info"
+          id="account_add">Ajouter</button>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <p *ngIf="editing.edit">edit mode</p>
-    <table class="table table-hover table-striped table-bordered table-condensed table-sm table-light">
-      <thead class="thead-dark">
-        <tr>
-          <th>Nom</th>
-          <th>IBAN / BIC</th>
-          <th>Solde</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let account of accounts; let i = index">
-          <td (dblclick)="editOne(i, account.id, 'name')">
-            <p *ngIf="editing.edit && editing.index == i && editing.property == 'name'" (keyup.esc)="cancel()" autofocus>
-              <input type="text"
-                     name="name"
-                     id="name"
-                     value="{{ account.name }}"
-                     class="form-control"
-                     (keyup.enter)="onSave($event, i)">
-            </p>
-            <p *ngIf="!editing.edit || editing.index != i">
-              {{ account.name }}
-            </p>
-          </td>
-          <td>
-            {{ account.iban}}
-            <br>
-            {{ account.bic }}
-          </td>
-          <td class="text-right">
-            {{ account.balance }} €
-          </td>
-          <td class="text-right">
-            <a href="#" class="text-dark">
-              <i class="material-icons">
-                <small>edit</small>
-              </i>
-            </a>
-            <a href="#" class="text-dark">
-              <i class="material-icons">
-                <small>delete_forever</small>
-              </i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="main__content">
+  <p *ngIf="editing.edit">edit mode</p>
+  <table class="main__account-datatable">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>IBAN / BIC</th>
+        <th>Solde</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let account of accounts; let i = index" class="k-alt">
+        <td (dblclick)="editOne(i, account.id, 'name')">
+          <p *ngIf="editing.edit && editing.index == i && editing.property == 'name'"
+             (keyup.esc)="cancel()"
+             autofocus>
+            <input type="text"
+                   name="name"
+                   id="name"
+                   value="{{ account.name }}"
+                   (keyup.enter)="onSave($event, i)">
+          </p>
+          <p *ngIf="!editing.edit || editing.index != i">
+            {{ account.name }}
+          </p>
+        </td>
+        <td>
+          {{ account.iban}}
+          <br>
+          {{ account.bic }}
+        </td>
+        <td class="currency">
+          {{ account.balance }} €
+        </td>
+        <td>
+          <a href="#">
+            <i class="material-icons">
+              <small>edit</small>
+            </i>
+          </a>
+          <a href="#">
+            <i class="material-icons">
+              <small>delete_forever</small>
+            </i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -7,7 +7,7 @@ import { AccountsService } from '../accounts/accounts.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   private accountsSubscription: Subscription;

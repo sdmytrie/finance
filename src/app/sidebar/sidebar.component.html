@@ -1,10 +1,9 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="account rounded mb-1" *ngFor="let account of accounts">
-      <h5 class="bg-dark m-1 rounded">
-        <a href="#" class="p-1 text-light">{{ account.name }}</a>
-      </h5>
+<div class="account">
+  <ul class="account__items"
+      *ngFor="let account of accounts">
+    <li class="account__item">
+      <a href="#">{{ account.name }}</a>
       <p class="account__balance">{{ account.balance }} €</p>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>

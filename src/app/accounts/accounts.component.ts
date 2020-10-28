@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
 import { Account } from './account.model';
@@ -7,50 +14,140 @@ import { AccountsService } from './accounts.service';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.css']
+  styleUrls: ['./accounts.component.css'],
 })
 export class AccountsComponent implements OnInit, OnDestroy {
+  @ViewChild('backdrop') backdrop: ElementRef;
+  @ViewChild('addAccount') addAccount: ElementRef;
+  @ViewChild('accountForm') accountForm: NgForm;
+
   accounts: Account[];
   accountsSubscription: Subscription;
-  editSubscription: Subscription;
-  editing: {edit:boolean, account_id:number, index:number, property:string};
+  editMode: boolean;
+  editModeSubscription: Subscription;
+  editedId: number;
+  editedIdSubscription: Subscription;
+  editedIndex: number;
+  editedIndexSubscription: Subscription;
 
-  constructor(
-    private accountsService: AccountsService
-  ) {
-    this.editing = {edit:false, account_id:0, index:0, property: ''};
-  }
+  constructor(private accountsService: AccountsService) {}
 
   ngOnInit(): void {
-    // this.accountService.getAccounts();
-    this.accountsSubscription = this.accountsService.fetchAll().subscribe(
-      (accounts: Account[]) => {
+    this.accountsSubscription = this.accountsService
+      .fetchAll()
+      .subscribe((accounts: Account[]) => {
         this.accounts = accounts;
         this.accountsService.accountsChanged.next(this.accounts.slice());
-    });
-    this.editSubscription = this.accountsService.editing.subscribe(
-      (editing) => {
-        this.editing = editing;
+      });
+
+    this.editModeSubscription = this.accountsService.editMode.subscribe(
+      (data) => {
+        console.log(data);
+        this.editMode = data;
+      }
+    );
+
+    this.editedIdSubscription = this.accountsService.editedAccount.subscribe(
+      (data) => {
+        this.editedId = data.id;
+      }
+    );
+
+    this.editedIndexSubscription = this.accountsService.editedAccountIndex.subscribe(
+      (data) => {
+        this.editedIndex = data;
       }
     );
   }
 
   ngOnDestroy(): void {
     this.accountsSubscription.unsubscribe();
-    this.editSubscription.unsubscribe();
+    this.editModeSubscription.unsubscribe();
+    this.editedIdSubscription.unsubscribe();
+    this.editedIndexSubscription.unsubscribe();
   }
 
-  editOne(index: number, account_id: number, property: string) {
-    this.accountsService.editOne(index, account_id, property);
+  private toggleBackdrop() {
+    this.backdrop.nativeElement.classList.toggle('visible');
   }
 
-  cancel() {
-    this.accountsService.cancel();
+  private toggleAccountModal() {
+    this.addAccount.nativeElement.classList.toggle('visible');
+    this.toggleBackdrop();
   }
 
-  onSave(event, index: number) {
-    console.log(event);
-    console.log(event.target.value);
-    this.accountsService.save(event.target.value, this.accounts, index);
+  addAccountHandler() {
+    // let newAccount: Account = { id: 0, name: 'New Account', balance: 0 };
+    // this.accounts = [newAccount, ...this.accounts];
+    // this.accountsService.accountsChanged.next(this.accounts.slice());
+    this.toggleAccountModal();
+  }
+
+  editAccountHandler(index: number, account: Account) {
+    // this.editMode = true;
+    this.accountsService.editMode.next(true);
+    this.accountsService.editedAccount.next(account);
+    this.accountsService.editedAccountIndex.next(index);
+
+    this.accountForm.setValue({
+      name: account.name,
+      bank: account.bank,
+      bic: account.bic,
+      iban: account.iban,
+    });
+    this.toggleAccountModal();
+  }
+
+  cancelAddAccountHandler(form: NgForm) {
+    this.toggleAccountModal();
+    form.reset();
+  }
+
+  backdropClickHandler() {
+    this.toggleAccountModal();
+  }
+
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+
+    let account: Account = {
+      name: form.value.name.trim(),
+      bank: form.value.bank.trim(),
+      iban: form.value.iban,
+      bic: form.value.bic,
+    };
+
+    if (this.editMode) {
+      account.id = this.editedId;
+    } else {
+      account.id = 0;
+    }
+
+    this.toggleAccountModal();
+
+    this.accountsService.save(account).subscribe((data) => {
+      account.id = data.id;
+    });
+
+    if (this.editMode) {
+      this.accounts[this.editedIndex] = account;
+      this.accounts = this.accounts.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    } else {
+      this.accounts = [account, ...this.accounts].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+    this.accountsService.accountsChanged.next(this.accounts.slice());
+    form.reset();
+  }
+
+  deleteAccountHandler(index: number, id: number) {
+    this.accounts = this.accounts.filter((item, idx) => idx !== index);
+    this.accountsService.accountsChanged.next(this.accounts.slice());
+    this.accountsService.delete(id);
   }
 }

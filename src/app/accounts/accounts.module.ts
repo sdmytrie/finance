@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AccountComponent } from './account/account.component';
@@ -7,6 +8,6 @@ import { AccountsComponent } from './accounts.component';
 
 @NgModule({
   declarations: [AccountsComponent, AccountComponent],
-  imports: [SharedModule, AccountsRouterModule],
+  imports: [FormsModule, SharedModule, AccountsRouterModule],
 })
 export class AccountsModule {}

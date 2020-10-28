@@ -15,7 +15,7 @@
 .signin input[type='password'] {
   padding: 0.6rem;
   margin: 0.8rem;
-  border-radius: 10px;
+  border-radius: 6px;
   border-color: #023d6d;
   font-size: 1.2rem;
 }
@@ -35,9 +35,10 @@
 }
 
 .signin__submit button {
-  padding: 0.6rem;
+  padding: 0.5rem 1rem;
   font-size: 1.2rem;
-  border-radius: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
   color: #023d6d;
   background-color: white;
   cursor: pointer;

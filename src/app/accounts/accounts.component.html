@@ -1,40 +1,37 @@
+<div id="backdrop"
+     #backdrop
+     (click)="backdropClickHandler()"></div>
 <div class="main__header">
   <h2>
     Les comptes bancaires
   </h2>
-  <button class="btn btn-info"
+  <button class="btn btn--success"
+          (click)="addAccountHandler()"
           id="account_add">Ajouter</button>
 </div>
 
 <div class="main__content">
-  <p *ngIf="editing.edit">edit mode</p>
   <table class="main__account-datatable">
     <thead>
       <tr>
         <th>Nom</th>
+        <th>Banque</th>
         <th>IBAN / BIC</th>
         <th>Solde</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let account of accounts; let i = index" class="k-alt">
-        <td (dblclick)="editOne(i, account.id, 'name')">
-          <p *ngIf="editing.edit && editing.index == i && editing.property == 'name'"
-             (keyup.esc)="cancel()"
-             autofocus>
-            <input type="text"
-                   name="name"
-                   id="name"
-                   value="{{ account.name }}"
-                   (keyup.enter)="onSave($event, i)">
-          </p>
-          <p *ngIf="!editing.edit || editing.index != i">
-            {{ account.name }}
-          </p>
+      <tr *ngFor="let account of accounts; let i = index"
+          class="k-alt">
+        <td>
+          {{ account.name }}
         </td>
         <td>
-          {{ account.iban}}
+          {{ account.bank }}
+        </td>
+        <td>
+          {{ account.iban }}
           <br>
           {{ account.bic }}
         </td>
@@ -42,12 +39,12 @@
           {{ account.balance }} €
         </td>
         <td>
-          <a href="#">
+          <a (click)="editAccountHandler(i, account)">
             <i class="material-icons">
               <small>edit</small>
             </i>
           </a>
-          <a href="#">
+          <a (click)="deleteAccountHandler(i, account.id)">
             <i class="material-icons">
               <small>delete_forever</small>
             </i>
@@ -56,4 +53,52 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="modal"
+     id="add-modal"
+     #addAccount>
+  <div class="modal__content">
+    <form #accountForm="ngForm"
+          (ngSubmit)="onSubmit(accountForm)">
+      <label for="name">Nom</label>
+      <input type="text"
+             name="name"
+             id="name"
+             ngModel
+             required
+             placeholder="Nom"
+             autocomplete="off" />
+      <label for="bank">Banque</label>
+      <input type="text"
+             name="bank"
+             id="bank"
+             ngModel
+             required
+             placeholder="Banque"
+             autocomplete="off" />
+      <label for="iban">IBAN</label>
+      <input type="text"
+             name="iban"
+             id="iban"
+             ngModel
+             placeholder="IBAN"
+             autocomplete="off" />
+      <label for="bic">BIC</label>
+      <input type="text"
+             name="bic"
+             id="bic"
+             ngModel
+             placeholder="BIC"
+             autocomplete="off" />
+      <div class="modal__actions">
+        <button type="button"
+                class="btn btn--passive"
+                (click)="cancelAddAccountHandler(accountForm)">Cancel</button>
+        <button type="submit"
+                class="btn btn--success"
+                [disabled]="!accountForm.valid">{{ editMode ? 'Update' : 'Add' }}</button>
+      </div>
+    </form>
+  </div>
 </div>

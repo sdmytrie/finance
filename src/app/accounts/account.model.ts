@@ -1,9 +1,10 @@
 export class Account {
-    constructor(
-        public id: number,
-        public name: string,
-        public balance: number,
-        public iban: string,
-        public bic: string
-    ){}
+  constructor(
+    public name: string,
+    public bank?: string,
+    public balance?: number,
+    public id?: number,
+    public iban?: string,
+    public bic?: string
+  ) {}
 }

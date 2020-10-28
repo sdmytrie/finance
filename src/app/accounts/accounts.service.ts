@@ -9,8 +9,10 @@ import { Account } from './account.model';
 @Injectable({ providedIn: 'root' })
 export class AccountsService {
     accountsChanged = new Subject<Account[]>();
+    editMode = new Subject<boolean>();
+    editedAccount = new Subject<Account>();
+    editedAccountIndex = new Subject<number>();
     private accounts: Account[] = [];
-    editing = new Subject<{edit:boolean, account_id:number, index:number, property:string}>();
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -18,17 +20,24 @@ export class AccountsService {
       return this.http.get<Account[]>(environment.apiUrl + '/accounts/');
     }
 
-    editOne(index: number, account_id: number, property: string) {
-      this.editing.next({edit: true, account_id: account_id, index: index, property:property});
+    save(account: Account) {
+      if (account.bic === '') {
+        account.bic = 'bic';
+      }
+      if (account.iban === '') {
+        account.iban = 'iban';
+      }
+      if (!account.bank) {
+        account.bank = 'bank';
+      }
+      if (account.id === 0) {
+        return this.http.post<Account>(environment.apiUrl + '/accounts/', account);
+      }else{
+        return this.http.put<Account>(environment.apiUrl + '/accounts/' + account.id + '/', account);
+      }
     }
 
-    cancel() {
-      this.editing.next({edit: false, account_id: 0, index: 0, property:''});
-    }
-
-    save(value: string, accounts: Account[], index: number) {
-      let account = accounts[index];
-      account.name = value;
-      this.editing.next({edit: false, account_id: 0, index: 0, property:''});
+    delete(id: number) {
+      this.http.delete<Account>(environment.apiUrl + '/accounts/' + id + '/').subscribe();
     }
 }

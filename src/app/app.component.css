@@ -33,6 +33,7 @@
 
 .main {
   grid-area: main;
+  padding: 0 0.8rem;
   justify-self: center;
   background-color: white;
 }

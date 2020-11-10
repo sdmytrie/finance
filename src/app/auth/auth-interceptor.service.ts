@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpHeaders,
-  HttpParams
-} from '@angular/common/http';
+  HttpHandler} from '@angular/common/http';
 import { take, exhaustMap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';

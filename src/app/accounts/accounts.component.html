@@ -35,10 +35,10 @@
           <br>
           {{ account.bic }}
         </td>
-        <td class="currency">
-          {{ account.balance }} €
+        <td class="currency" nowrap>
+          {{ account.balance || 0 }} €
         </td>
-        <td>
+        <td nowrap>
           <a (click)="editAccountHandler(i, account)">
             <i class="material-icons">
               <small>edit</small>

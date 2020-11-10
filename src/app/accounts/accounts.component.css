@@ -5,12 +5,13 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgba(2, 61, 109, 0.1);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, .2);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
 }
 
 .main__account-datatable {
   width: 100%;
   font-size: 1.2rem;
-  box-shadow: 8px 8px rgba(0, 0, 0, .2);
 }
 
 .main__account-datatable thead {

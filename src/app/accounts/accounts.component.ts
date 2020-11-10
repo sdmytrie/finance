@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { Account } from './account.model';
 import { AccountsService } from './accounts.service';
@@ -42,7 +42,6 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
     this.editModeSubscription = this.accountsService.editMode.subscribe(
       (data) => {
-        console.log(data);
         this.editMode = data;
       }
     );
@@ -112,12 +111,12 @@ export class AccountsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let account: Account = {
-      name: form.value.name.trim(),
-      bank: form.value.bank.trim(),
-      iban: form.value.iban,
-      bic: form.value.bic,
-    };
+    const account: Account = new Account(
+      form.value.name.trim(),
+      form.value.bank.trim(),
+      form.value.iban.trim() || 'iban',
+      form.value.bic.trim() || 'bic'
+    );
 
     if (this.editMode) {
       account.id = this.editedId;
@@ -146,7 +145,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   }
 
   deleteAccountHandler(index: number, id: number) {
-    this.accounts = this.accounts.filter((item, idx) => idx !== index);
+    this.accounts.splice(index, 1);
     this.accountsService.accountsChanged.next(this.accounts.slice());
     this.accountsService.delete(id);
   }

@@ -32,7 +32,7 @@ export class AuthService {
           this.handleAuthentication(
             tokenDecoded.username,
             tokenDecoded.user_id,
-            tokenDecoded.exp*1000,
+            tokenDecoded.exp * 1000,
             resData.token
           );
         })
@@ -59,8 +59,7 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration =
-        userData.tokenExpires - new Date().getTime();
+      const expirationDuration = userData.tokenExpires - new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }
@@ -87,10 +86,10 @@ export class AuthService {
     expiresIn: number,
     token: string
   ) {
-    const expirationDate = expiresIn;
-    const user = new User(username, userId, expirationDate, token);
+    const expirationDate = expiresIn - new Date().getTime();
+    const user = new User(username, userId, expiresIn, token);
     this.user.next(user);
-    this.autoLogout(expiresIn);
+    this.autoLogout(expirationDate);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 

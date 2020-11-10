@@ -21,15 +21,7 @@ export class AccountsService {
     }
 
     save(account: Account) {
-      if (account.bic === '') {
-        account.bic = 'bic';
-      }
-      if (account.iban === '') {
-        account.iban = 'iban';
-      }
-      if (!account.bank) {
-        account.bank = 'bank';
-      }
+      console.log(account);
       if (account.id === 0) {
         return this.http.post<Account>(environment.apiUrl + '/accounts/', account);
       }else{

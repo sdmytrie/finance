@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
@@ -19,8 +18,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

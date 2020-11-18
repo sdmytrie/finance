@@ -8,8 +8,8 @@ import {
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { Account } from './account.model';
-import { AccountsService } from './accounts.service';
+import { AccountStoreService } from '../shared/store/account-store.service';
+import { Account } from '../shared/store/account.model';
 
 @Component({
   selector: 'app-accounts',
@@ -30,29 +30,29 @@ export class AccountsComponent implements OnInit, OnDestroy {
   editedIndex: number;
   editedIndexSubscription: Subscription;
 
-  constructor(private accountsService: AccountsService) {}
+  constructor(private accountStoreService: AccountStoreService) {}
 
   ngOnInit(): void {
-    this.accountsSubscription = this.accountsService
+    this.accountsSubscription = this.accountStoreService
       .fetchAll()
       .subscribe((accounts: Account[]) => {
         this.accounts = accounts;
-        this.accountsService.accountsChanged.next(this.accounts.slice());
+        this.accountStoreService.accountsChanged.next(this.accounts.slice());
       });
 
-    this.editModeSubscription = this.accountsService.editMode.subscribe(
+    this.editModeSubscription = this.accountStoreService.editMode.subscribe(
       (data) => {
         this.editMode = data;
       }
     );
 
-    this.editedIdSubscription = this.accountsService.editedAccount.subscribe(
+    this.editedIdSubscription = this.accountStoreService.editedAccount.subscribe(
       (data) => {
         this.editedId = data.id;
       }
     );
 
-    this.editedIndexSubscription = this.accountsService.editedAccountIndex.subscribe(
+    this.editedIndexSubscription = this.accountStoreService.editedAccountIndex.subscribe(
       (data) => {
         this.editedIndex = data;
       }
@@ -84,9 +84,9 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
   editAccountHandler(index: number, account: Account) {
     // this.editMode = true;
-    this.accountsService.editMode.next(true);
-    this.accountsService.editedAccount.next(account);
-    this.accountsService.editedAccountIndex.next(index);
+    this.accountStoreService.editMode.next(true);
+    this.accountStoreService.editedAccount.next(account);
+    this.accountStoreService.editedAccountIndex.next(index);
 
     this.accountForm.setValue({
       name: account.name,
@@ -126,7 +126,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
     this.toggleAccountModal();
 
-    this.accountsService.save(account).subscribe((data) => {
+    this.accountStoreService.save(account).subscribe((data) => {
       account.id = data.id;
     });
 
@@ -140,13 +140,13 @@ export class AccountsComponent implements OnInit, OnDestroy {
         a.name.localeCompare(b.name)
       );
     }
-    this.accountsService.accountsChanged.next(this.accounts.slice());
+    this.accountStoreService.accountsChanged.next(this.accounts.slice());
     form.reset();
   }
 
   deleteAccountHandler(index: number, id: number) {
     this.accounts.splice(index, 1);
-    this.accountsService.accountsChanged.next(this.accounts.slice());
-    this.accountsService.delete(id);
+    this.accountStoreService.accountsChanged.next(this.accounts.slice());
+    this.accountStoreService.delete(id);
   }
 }

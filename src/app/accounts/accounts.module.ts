@@ -8,5 +8,6 @@ import { AccountsComponent } from './accounts.component';
 @NgModule({
   declarations: [AccountsComponent],
   imports: [FormsModule, SharedModule, AccountsRouterModule],
+  exports: [AccountsComponent]
 })
 export class AccountsModule {}

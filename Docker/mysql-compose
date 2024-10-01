@@ -1,0 +1,22 @@
+version: '3.7'
+services: 
+    mysql:
+        image: mysql:latest
+        env_file:
+          - ./config/mysql.env
+        ports: 
+          - 3306:3306
+        volumes: 
+            - mysql_data:/var/lib/mysql
+
+    adminer_container:
+        image: adminer:latest
+        environment: 
+            ADMINER_DEFAULT_SERVER: mysql
+            ADMINER_DESIGN: dracula
+        ports: 
+          - 8080:8080
+
+
+volumes: 
+    mysql_data: 

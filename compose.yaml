@@ -1,0 +1,34 @@
+version: '3.7'
+services: 
+    mariadb:
+        image: mariadb:10
+        command: --default-authentication-plugin=mysql_native_password
+        env_file:
+          - ./config/mariadb.env
+        ports: 
+          - 3306:3306
+        volumes: 
+            - mariadb_data:/var/lib/mysql
+
+    adminer_container:
+        image: adminer:latest
+        environment: 
+            ADMINER_DEFAULT_SERVER: mariadb
+            ADMINER_DESIGN: dracula
+        ports: 
+          - 8080:8080
+    web:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./src/:/src
+        ports:
+            - "8000:8000"
+        environment:
+            - MYSQL_ROOT_PASSWORD=_Azerty1
+        depends_on:
+            - mariadb
+
+
+volumes: 
+    mariadb_data: 
